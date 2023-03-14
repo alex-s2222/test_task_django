@@ -1,0 +1,48 @@
+{% extends "../main/header.html" %}
+
+{% block content %}
+
+<section>
+    <div>
+        <h2>{{ room.title }}</h2>
+        <picture>
+            <img src="{{ room.picture.url }}" alt="room">
+        </picture> 
+    </div>
+    <div>
+        <p> price: {{ room.price }}</p>
+        <p> number of tenants: {{ room.seat }}</p>
+        {% if room.deskription %}
+            <p> deskription: {{ room.deskription }}</p>
+        {% endif %}
+    </div>
+</section>
+
+<section>
+    <form method="POST">
+        <label for="booking">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+                <div>
+                    <label for="booking">start_date:</label><br>
+                    <input type="date" name="start_date"><br>
+                    <label for="booking">end_date:</label><br>
+                    <input type="date" name="end_date"><br>
+                </div>
+                <p><input type="submit" value="Забронировать" class="btn btn-primary"></p>
+            {% else %}
+                <a class="btn btn-primary" href="/login">Бронироование доступно после регистрации</a>
+            {% endif %}
+        </label>    
+    </form>
+</section>
+
+<section>
+    {% if log %}
+        <div>
+            {{ log }}
+        </div>
+    {% endif %}
+</section>
+
+{% endblock %}

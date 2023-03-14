@@ -1,0 +1,45 @@
+{% extends "main/header.html" %}
+
+{% block content %}
+
+<h1>Комнаты</h1> 
+    <section>
+        <form method="POST">
+            <label for="choise">Выберите сортировку</label>
+            {% csrf_token %}
+            <select id="choise" name="sort" >
+                <option label="По Цена" value="1"> Price</option>
+                <option label="По Местам" value="2"> Seat</option>
+                <option label="Свободные комнаты по дате" value="3" selected>Free</option>
+            </select>
+            {% if select_date %}
+                <div>
+                    <label for="choise">start_date:</label><br>
+                    <input type="date" name="start_date"><br>
+                    <label for="choise">end_date:</label><br>
+                    <input type="date" name="end_date"><br>
+                </div>
+            {% endif %}
+            <p><input type="submit" value="Показать" class="btn btn-primary"></p>
+         </form>
+    </section>  
+
+{% for room in rooms %}
+    <section>
+        <div class="card" style="width: 18rem;">
+            <img src="{{ room.picture.url }}" alt="room" class="card-img-top">
+            <div  class="card-body">
+                <h2 class="card-title">{{ room.title }}</h2>
+                <p> price: {{ room.price }}</p>
+                <p> number of tenants: {{ room.seat }}</p>
+                {% if room.deskription %}
+                    <p> deskription: {{ room.deskription }}</p>
+                {% endif %}
+                <a href="/{{ room.pk }}" class="btn btn-primary">Просмотр комнаты</a>
+            </div>
+        </div>
+    </section>
+
+{% endfor %}
+
+{% endblock %}

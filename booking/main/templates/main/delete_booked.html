@@ -1,0 +1,14 @@
+{% extends "../main/header.html" %}
+
+{% block content %}
+
+<section>
+    <p>Начало брони: {{ booking.start_date }}</p>
+    <p>Конец брони: {{ booking.end_date }}</p>   
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" value="delete" class="btn btn-primary">
+    </form>
+</section>
+
+{% endblock %}

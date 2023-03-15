@@ -1,8 +1,8 @@
 # test_task
-## Перед запуском 
+# Перед запуском 
 Перед запуском нужно создать виртуальную среду:
 
-<code>python -m venv <name_venv>
+<code>python3 -m venv <name_venv>
 </code>
 
 Активировать виртуальную среду:
@@ -24,3 +24,9 @@ pip                 22.3.1
 setuptools          65.5.0
 sqlparse            0.4.3
 </code>
+
+В настройках проекта изменить:
+- [settings](https://github.com/alex-s2222/test_task/blob/main/booking/booking/settings.py)
+
+В DATABASES - изменить на свои настройки Базы данных <br>
+В SECRET_KET - изменить на свой персональный ключ

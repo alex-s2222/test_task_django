@@ -64,10 +64,13 @@ def select_room(request, room_pk: int):
         elif (start_date < date_now) or (end_date < date_now):
             log_message = "даты должны быть больше сегодняшней"
         else:
-            booking = Booking(
-                room=room, start_date=start_date, end_date=end_date, user_name=request.user.username)
-            booking.save()
-            log_message = "комната забронирована"
+            free_rooms = _search_rooms_by_date(start_date=start_date, end_date=end_date)
+            if room in free_rooms:
+                booking = Booking(room=room, start_date=start_date, end_date=end_date, user_name=request.user.username)
+                booking.save()
+                log_message = "комната забронирована"
+            else:
+                log_message = "Комната забронирована другим пользователем"
 
     return render(request, template_name='rooms/view_room.html', context={'room': room, 'log': log_message})
 
@@ -121,5 +124,6 @@ def _search_rooms_by_date(start_date: datetime, end_date: datetime) -> list[Room
 
     rooms_id_from_booked = list({room.room_id for room in booked_room})
 
-    rooms = Room.objects.exclude(pk__in=rooms_id_from_booked)
-    return rooms
+    free_rooms = Room.objects.exclude(pk__in=rooms_id_from_booked)
+    return free_rooms
+

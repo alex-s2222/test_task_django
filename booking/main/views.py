@@ -50,7 +50,11 @@ def login_request(request):
 
 def select_room(request, room_pk: int):
     log_message: str = None
-    room: object = Room.objects.get(pk=room_pk)
+
+    try:
+        room: object = Room.objects.get(pk=room_pk)
+    except:
+        return HttpResponse("Комнаты по такому id не существует")
 
     if request.method == "POST" and request.user.is_authenticated:
         date_now = datetime.now().date()
@@ -110,12 +114,19 @@ def my_booking(request):
 
 
 def delete_room(request, booking_pk: int):
-    booked_room = Booking.objects.get(pk=booking_pk)
-    if request.method == "POST":
-        booked_room.delete()
-        return redirect('/my_booking/')
-    return render(request=request, template_name="main/delete_booked.html", context={"booking": booked_room})
-
+    if request.user.is_authenticated:
+        try:
+            user = request.user
+            booked_room: object = Booking.objects.get(pk=booking_pk, user_name=user.username)
+        except:
+            return HttpResponse("Брони по такому id не существует")
+        
+        if request.method == "POST":
+            booked_room.delete()
+            return redirect('/my_booking/')
+        return render(request=request, template_name="main/delete_booked.html", context={"booking": booked_room})
+    else:
+        return redirect('/login')
 
 def _search_rooms_by_date(start_date: datetime, end_date: datetime) -> list[Room]:
     rooms_id_from_booked: list
@@ -126,4 +137,3 @@ def _search_rooms_by_date(start_date: datetime, end_date: datetime) -> list[Room
 
     free_rooms = Room.objects.exclude(pk__in=rooms_id_from_booked)
     return free_rooms
-

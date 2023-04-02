@@ -18,3 +18,5 @@
 В DATABASES - изменить на свои настройки Базы данных <br>
 В SECRET_KET - изменить на свой персональный ключ
 
+Мини документация по URL:
+- [Mini-Documentation](https://github.com/alex-s2222/test_task_django/blob/main/Mini_documentation.md)

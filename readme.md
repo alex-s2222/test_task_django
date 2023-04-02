@@ -1,16 +1,24 @@
 # Перед запуском 
-<hr>
 <h3> Cоздать виртуальное окружение:</h3>
-<code>python3 -m venv</code>
+
+```
+python3 -m venv
+```
 
 Активировать виртуальную среду:
-<code>source /bin/activate (Mac)</code>
-<code>source \Scripts\activate.bat (Windows)</code>
+```
+source /bin/activate (Mac)
+```
+
+```
+source \Scripts\activate.bat (Windows)
+```
 
 <h3>Установить зависимости из файла requirements.txt:</h3>
-<code> pip install -r requirements.txt </code>
 
-<hr>
+```
+pip install -r requirements.txt
+```
 
 В настройках проекта изменить:
 - [settings](https://github.com/alex-s2222/test_task/blob/main/booking/booking/settings.py)
